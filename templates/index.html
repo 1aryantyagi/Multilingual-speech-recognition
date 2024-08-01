@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech recognition with Whisper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Speech recognition with Whisper and Summarization.</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="audio_file">Upload your audio:</label>
+            <input type="file" id="audio_file" name="audio_file" accept=".wav, .mp3, .m4a" required>
+            <button type="submit">Transcribe Audio</button>
+        </form>
+
+        <div class="output-section">
+            {% if transcription %}
+            <h2>Transcription</h2>
+            <textarea readonly>{{ transcription }}</textarea>
+            {% endif %}
+
+            {% if summary %}
+            <h2>Summary</h2>
+            <textarea readonly>{{ summary }}</textarea>
+            {% endif %}
+
+            {% if transcription %}
+            <a href="{{ url_for('download_pdf', transcription=transcription, summary=summary) }}">
+                <button type="button">Download as PDF</button>
+            </a>
+            {% endif %}
+
+        </div>
+    </div>
+</body>
+
+</html>
